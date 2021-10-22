@@ -1,28 +1,25 @@
 <template>
-    <canvas ref="canvasRef"></canvas>
+  <canvas ref="canvasRef"></canvas>
 </template>
 
 <script lang="ts">
-import * as PIXI from 'pixi.js';
-
 import {defineComponent, reactive, onMounted, ref} from 'vue'
-import {PixiApp} from "@/logics/PixiApp";
+import {Stage} from "@/logics/Stage";
 
 interface State {
-  app: PixiApp | null;
+  stage: Stage | null;
 }
 
 export default defineComponent({
-  components:{
-  },
+  components: {},
   setup() {
     let canvasRef = ref<HTMLCanvasElement | null>(null)
-    let {app} = reactive<State>({
-      app: null
+    let {stage} = reactive<State>({
+      stage: null
     })
     onMounted(() => {
       if (canvasRef.value) {
-        app = new PixiApp(canvasRef.value)
+        stage = new Stage(canvasRef.value)
       }
     })
 
