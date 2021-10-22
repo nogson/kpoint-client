@@ -1,34 +1,37 @@
 <template>
-  <div class="stage">
-  </div>
+    <canvas ref="canvasRef"></canvas>
 </template>
 
 <script lang="ts">
 import * as PIXI from 'pixi.js';
-import {Options, Vue} from 'vue-class-component';
 
-@Options({
-  props: {
-    msg: String
+import {defineComponent, reactive, onMounted, ref} from 'vue'
+import {PixiApp} from "@/logics/PixiApp";
+
+interface State {
+  app: PixiApp | null;
+}
+
+export default defineComponent({
+  components:{
+  },
+  setup() {
+    let canvasRef = ref<HTMLCanvasElement | null>(null)
+    let {app} = reactive<State>({
+      app: null
+    })
+    onMounted(() => {
+      if (canvasRef.value) {
+        app = new PixiApp(canvasRef.value)
+      }
+    })
+
+    return {
+      canvasRef
+    }
   }
 })
-export default class Home extends Vue {
-  app!: PIXI.Application
 
-  mounted() {
-    this.app = new PIXI.Application({
-      transparent: true,
-      antialias: true,
-      resolution: window.devicePixelRatio || 1, // 解像度に合わせた拡大率を指定する
-      autoDensity: true, // CSSで見た目のサイズの戻してくれる,
-      resizeTo: window
-    });
-
-    this.$el.appendChild(this.app.view);
-    this.app.renderer.resize(window.innerWidth, window.innerHeight);
-
-  }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

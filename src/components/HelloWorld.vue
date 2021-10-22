@@ -26,7 +26,13 @@ export default class HelloWorld extends Vue {
     });
 
     this.$el.appendChild(this.app.view);
-    this.app.renderer.resize(window.innerWidth, window.innerHeight);
+
+    let obj = new PIXI.Graphics();
+    obj.beginFill(0xff0000);
+    obj.drawRect(0, 0, 200, 100);
+    this.app.stage.addChild(obj);
+
+
   }
 }
 </script>
