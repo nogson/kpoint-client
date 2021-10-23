@@ -7,6 +7,8 @@ export class Stage {
 
     constructor(canvas: HTMLCanvasElement) {
         this.app = new PixiApp(canvas)
-        this.point = new Point(this.app)
+        this.point = new Point(true, '5')
+        this.app.addContainer(this.point.container)
+        this.point.container.x = 100
     }
 }
