@@ -6,9 +6,15 @@ export class Points {
 
     constructor(maxPoints = 10) {
         for (let i = 0; i < maxPoints; i++) {
-            const point = new Point(true, String(i),i * 10, i * 10)
+            const props = {
+                text: String(i),
+                x: i * 10,
+                y: i * 10,
+                isActive: true
+            }
+            const point = new Point(props)
             this.container.addChild(point.container)
-            console.log(point.container.width)
+            console.log(point.height)
         }
     }
 }
