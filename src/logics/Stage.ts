@@ -1,14 +1,14 @@
 import {PixiApp} from "@/logics/PixiApp";
-import {Point} from "@/logics/Point";
+import {Points} from "@/logics/Points";
 
 export class Stage {
     readonly app: PixiApp
-    readonly point: Point
+    readonly points: Points
 
     constructor(canvas: HTMLCanvasElement) {
         this.app = new PixiApp(canvas)
-        this.point = new Point(true, '5')
-        this.app.addContainer(this.point.container)
-        this.point.container.x = 100
+        this.points = new Points()
+        this.app.addContainer(this.points.container)
+        this.points.container.x = 100
     }
 }
