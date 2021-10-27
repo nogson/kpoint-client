@@ -14,8 +14,6 @@ export class Point {
     readonly pointSprite: PIXI.Sprite | null
     readonly textSprite: PIXI.Text | null
     public container: PIXI.Container = new PIXI.Container()
-    readonly width = 111
-    readonly height = 111
 
     constructor(props: props = {text: '0', x: 0, y: 0, isActive: false}) {
 
@@ -36,8 +34,8 @@ export class Point {
 
         this.textSprite = new PIXI.Text(props.text, style);
 
-        this.textSprite.x = 40
-        this.textSprite.y = 25
+        this.textSprite.x = 36
+        this.textSprite.y = 20
 
         this.container.addChild(this.textSprite)
 

@@ -9,6 +9,6 @@ export class Stage {
         this.app = new PixiApp(canvas)
         this.points = new Points()
         this.app.addContainer(this.points.container)
-        this.points.container.x = 100
+        this.points.container.x = 0
     }
 }
