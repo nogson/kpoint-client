@@ -34,7 +34,7 @@ export class Point {
 
         this.textSprite = new PIXI.Text(props.text, style);
 
-        this.textSprite.x = 36
+        this.textSprite.x = props.text.length >= 2 ? 22 : 36
         this.textSprite.y = 20
 
         this.container.addChild(this.textSprite)
