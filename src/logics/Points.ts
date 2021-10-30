@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js'
 import {Point} from '@/logics/Point'
 
-const windowW = window.innerWidth
+const windowW = document.body.clientWidth
 
 export class Points {
     public container = new PIXI.Container()

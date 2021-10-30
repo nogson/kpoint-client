@@ -1,7 +1,7 @@
-import * as PIXI from 'pixi.js';
+import * as PIXI from 'pixi.js'
 
 const stageSize = {
-    width: window.innerWidth,
+    width: document.body.clientWidth,
     height: window.innerHeight
 }
 
@@ -16,13 +16,14 @@ export class PixiApp extends PIXI.Application {
             resizeTo: window,
             backgroundAlpha: 1,
             view: canvas
-        });
+        })
 
         // スクロールできるようにする(不要かも)
         this.renderer.plugins.interaction.autoPreventDefault = false
         this.renderer.view.style.touchAction = 'auto'
 
         const world = new PIXI.Container()
+
         world.width = stageSize.width
         world.height = stageSize.height
         this.stage.addChild(world)
@@ -31,7 +32,7 @@ export class PixiApp extends PIXI.Application {
         const bgLayer = PIXI.Sprite.from(gradient)
         world.addChild(bgLayer)
 
-        this.renderer.resize(window.innerWidth, window.innerHeight);
+        this.renderer.resize(window.innerWidth, window.innerHeight)
 
     }
 

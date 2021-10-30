@@ -30,9 +30,9 @@ export class Point {
             dropShadowDistance: -2,
             dropShadowAngle: 0.5,
             dropShadowBlur: 1,
-        });
+        })
 
-        this.textSprite = new PIXI.Text(props.text, style);
+        this.textSprite = new PIXI.Text(props.text, style)
 
         this.textSprite.x = props.text.length >= 2 ? 22 : 36
         this.textSprite.y = 20
