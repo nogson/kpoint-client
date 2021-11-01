@@ -29,7 +29,7 @@ export class Controller {
         this.pointTextSprite = new PIXI.Text('10000', pointTextStyle)
 
         this.btnAddPoint.interactive = true
-
+        this.btnAddPoint.buttonMode = true
         this.pointTextBox.y = 10
         this.pointTextContainer.addChild(this.pointTextBox)
 

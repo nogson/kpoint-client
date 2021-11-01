@@ -3,6 +3,7 @@ import {PixiApp} from '@/logics/PixiApp'
 import dialogBg from '@/assets/images/point_dialog_bg.png'
 import dialogTextBoxBg from '@/assets/images/point_dialog_text_box.png'
 import closeButton from '@/assets/images/button_close.png'
+import {gsap} from 'gsap'
 
 const windowW = window.innerWidth
 const windowH = window.innerHeight
@@ -35,7 +36,6 @@ export class AddPointDialog {
     private dialogTextBoxArr: PIXI.Container[] = []
     private closeButton = PIXI.Sprite.from(closeButton)
 
-
     constructor(app: PixiApp) {
         this.container.sortableChildren = true
 
@@ -45,16 +45,48 @@ export class AddPointDialog {
         this.createDialog()
         // 閉じるボタン
         this.closeButton.x = windowW - 65
+        this.closeButton.alpha = 0
+        this.closeButton.interactive = true
+        this.closeButton.buttonMode = true
+        this.closeButton.on('click', () => {
+            this.fadeOut()
+        })
         this.container.addChild(this.closeButton)
         //背景のアニメーション
+        this.dialogContainer.y = windowH
         app.ticker.add(() => {
-            this.backGroundContainer.children.forEach(child => {
-                child.rotation += 0.01
-            })
+            this.rotationBackground()
+        })
+
+        this.fadeIn()
+    }
+
+    private rotationBackground = () => {
+        this.backGroundContainer.children.forEach(child => {
+            child.rotation += 0.01
         })
     }
 
-    createDialog = () => {
+    private fadeIn() {
+        gsap.to(this.closeButton, {alpha: 1, duration: 1})
+        gsap.to(this.background, {alpha: 1, duration: 1})
+        gsap.to(this.dialogContainer, {y: (windowH - 700) / 2, duration: 0.5, ease: 'back.out'})
+        this.backGroundContainer.children.forEach(child => {
+            gsap.to(child, {alpha: 1, duration: 1})
+        })
+    }
+
+    private fadeOut() {
+        console.log(this.closeButton)
+        gsap.to(this.closeButton, {alpha: 0, duration: 1})
+        gsap.to(this.background, {alpha: 0, duration: 1})
+        gsap.to(this.dialogContainer, {y: windowH, duration: 0.5, ease: 'back.in'})
+        this.backGroundContainer.children.forEach(child => {
+            gsap.to(child, {alpha: 0, duration: 0.5})
+        })
+    }
+
+    private createDialog = () => {
         // 背景
         this.dialogBg.anchor.set(0.5, 0)
         this.dialogBg.x = windowW / 2
@@ -70,7 +102,8 @@ export class AddPointDialog {
             dialogTextBox.y = i * (133 + 24) + 110
             textBoxContainer.addChild(dialogTextBox)
             // ポイント テキスト
-            const pointTextSprite = new PIXI.Text(String(i), pointTextStyle)
+            const point = i
+            const pointTextSprite = new PIXI.Text(String(point), pointTextStyle)
             pointTextSprite.anchor.set(0.5)
             pointTextSprite.x = windowW / 2 - 102
             pointTextSprite.y = i * (133 + 24) + 110 + 133 / 2
@@ -86,15 +119,24 @@ export class AddPointDialog {
             this.dialogContainer.addChild(textBoxContainer)
             this.dialogTextBoxArr.push(textBoxContainer)
 
-        }
+            textBoxContainer.interactive = true
+            textBoxContainer.buttonMode = true
+            textBoxContainer.on('click', () => {
+                this.getPoint(point)
+            })
 
-        this.dialogContainer.y = (windowH - 700) / 2
+        }
         this.container.addChild(this.dialogContainer)
     }
 
-    createBackGround = () => {
+    private getPoint = (point: number) => {
+        console.log('ok', point)
+    }
+
+    private createBackGround = () => {
         this.background.beginFill(0xffffff)
         this.background.drawRect(0, 0, windowW, windowH)
+        this.background.alpha = 0
         this.container.addChild(this.background)
         this.container.addChild(this.backGroundContainer)
 
@@ -110,6 +152,7 @@ export class AddPointDialog {
             line.x = windowW / 2
             line.y = windowH / 2
             line.rotation = i * 0.3
+            line.alpha = 0
             this.backGroundContainer.addChild(line)
         }
     }
