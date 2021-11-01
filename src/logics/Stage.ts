@@ -21,7 +21,6 @@ export class Stage {
 
         this.controller.btnAddPoint.on('click', this.openAddPointWindow)
 
-        this.app.addContainer(this.addPointDialog.container)
     }
 
     openAddPointWindow = () => {

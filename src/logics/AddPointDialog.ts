@@ -8,22 +8,22 @@ const windowW = window.innerWidth
 const windowH = window.innerHeight
 
 const pointTextStyle = new PIXI.TextStyle({
-    fill: "white",
-    fontFamily: "Helvetica",
+    fill: 'white',
+    fontFamily: 'Helvetica',
     fontSize: 50,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     dropShadow: true,
-    dropShadowColor: "#b2b2b2",
+    dropShadowColor: '#b2b2b2',
     dropShadowDistance: -2,
     dropShadowAngle: 0.5,
     dropShadowBlur: 1,
 })
 
 const pointDetailTextStyle = new PIXI.TextStyle({
-    fill: "0x000000",
-    fontFamily: "Helvetica",
+    fill: '0x000000',
+    fontFamily: 'Helvetica',
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
 })
 
 export class AddPointDialog {
@@ -37,14 +37,15 @@ export class AddPointDialog {
 
 
     constructor(app: PixiApp) {
-        // 閉じるボタン
-        this.closeButton.anchor.set(1)
-        this.container.addChild(this.closeButton)
+        this.container.sortableChildren = true
 
         //背景を作成
         this.createBackGround()
         // ダイアログを作成
         this.createDialog()
+        // 閉じるボタン
+        this.closeButton.x = windowW - 65
+        this.container.addChild(this.closeButton)
         //背景のアニメーション
         app.ticker.add(() => {
             this.backGroundContainer.children.forEach(child => {
