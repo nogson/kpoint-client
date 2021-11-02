@@ -2,6 +2,7 @@ import {PixiApp} from '@/logics/PixiApp'
 import {Points} from '@/logics/Points'
 import {Controller} from '@/logics/Controller'
 import {AddPointDialog} from '@/logics/AddPointDialog'
+import {ShopDialog} from '@/logics/ShopDialog'
 
 const windowH = window.innerHeight
 
