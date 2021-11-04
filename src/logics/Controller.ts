@@ -42,6 +42,8 @@ export class Controller {
 
         this.pointTextContainer.x = windowW - 200 - margin
         this.pointTextContainer.y = 10
+        this.pointTextContainer.interactive = true
+        this.pointTextContainer.buttonMode = true
         this.container.addChild(this.pointTextContainer)
 
         this.btnAddPoint.interactive = true

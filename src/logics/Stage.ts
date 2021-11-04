@@ -10,21 +10,27 @@ export class Stage {
     readonly app: PixiApp
     readonly points = new Points()
     readonly controller = new Controller()
-    private addPointDialog :AddPointDialog | null  = null
+    private addPointDialog: AddPointDialog | null = null
+    private shopDialog: ShopDialog | null = null
+
 
     constructor(canvas: HTMLCanvasElement) {
         this.app = new PixiApp(canvas)
-
         this.app.addContainer(this.points.container)
         this.app.addContainer(this.controller.container)
         this.points.container.x = 0
         this.controller.container.y = windowH - 66 - 25
-        this.controller.btnAddPoint.on('click', this.openAddPointWindow)
-
+        this.controller.btnAddPoint.on('click', this.openAddPointDialog)
+        this.controller.pointTextContainer.on('click', this.openShopDialog)
     }
 
-    openAddPointWindow = () => {
-        this.addPointDialog = new AddPointDialog(this.app)
+    openAddPointDialog = () => {
+        this.addPointDialog = new AddPointDialog(this.app,this.controller)
         this.app.addContainer(this.addPointDialog.container)
+    }
+
+    openShopDialog = () => {
+        this.shopDialog = new ShopDialog(this.controller)
+        this.app.addContainer(this.shopDialog.container)
     }
 }

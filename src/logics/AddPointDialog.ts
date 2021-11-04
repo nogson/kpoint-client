@@ -4,6 +4,7 @@ import dialogBg from '@/assets/images/point_dialog_bg.png'
 import dialogTextBoxBg from '@/assets/images/point_dialog_text_box.png'
 import closeButton from '@/assets/images/button_close.png'
 import {gsap} from 'gsap'
+import {Controller} from '@/logics/Controller'
 
 const windowW = window.innerWidth
 const windowH = window.innerHeight
@@ -35,10 +36,11 @@ export class AddPointDialog {
     private dialogBg = PIXI.Sprite.from(dialogBg)
     private dialogTextBoxArr: PIXI.Container[] = []
     private closeButton = PIXI.Sprite.from(closeButton)
+    private controller: Controller
 
-    constructor(app: PixiApp) {
+    constructor(app: PixiApp, controller: Controller) {
         this.container.sortableChildren = true
-
+        this.controller = controller
         //背景を作成
         this.createBackGround()
         // ダイアログを作成
@@ -68,6 +70,7 @@ export class AddPointDialog {
     }
 
     private fadeIn() {
+        this.controller.container.interactiveChildren = false
         gsap.to(this.closeButton, {alpha: 1, duration: 1})
         gsap.to(this.background, {alpha: 1, duration: 1})
         gsap.to(this.dialogContainer, {y: (windowH - 700) / 2, duration: 0.5, ease: 'back.out'})
@@ -77,7 +80,7 @@ export class AddPointDialog {
     }
 
     private fadeOut() {
-        console.log(this.closeButton)
+        this.controller.container.interactiveChildren = true
         gsap.to(this.closeButton, {alpha: 0, duration: 1})
         gsap.to(this.background, {alpha: 0, duration: 1})
         gsap.to(this.dialogContainer, {y: windowH, duration: 0.5, ease: 'back.in'})
