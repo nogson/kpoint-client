@@ -1,11 +1,12 @@
 <template>
-  <canvas ref="canvasRef"></canvas>
+  <canvas ref='canvasRef'></canvas>
 </template>
 
-<script lang="ts">
-import {defineComponent, reactive, onMounted, ref} from 'vue'
-import {Stage} from "@/logics/Stage"
-import db from "@/firebase/firestore.ts"
+<script lang='ts'>
+import {defineComponent, reactive, onMounted, onBeforeMount, ref} from 'vue'
+import {Stage} from '@/logics/Stage'
+import {useStore} from 'vuex'
+
 
 interface State {
   stage: Stage | null;
@@ -14,21 +15,18 @@ interface State {
 export default defineComponent({
   components: {},
   setup() {
+    const store = useStore()
     let canvasRef = ref<HTMLCanvasElement | null>(null)
     let {stage} = reactive<State>({
       stage: null
     })
-    onMounted(async() => {
-      // var docRef = db.collection("presents")
-      // await docRef.add(
-      //     { name: "任天堂Switch",point:1000}
-      // )
-      const querySnapshot =  await db.collection("presents").get()
 
-      querySnapshot.forEach(doc => {
-        console.log(doc.data())
-      })
+    onBeforeMount(async () => {
+      await store.dispatch('getPresents')
+    })
 
+
+    onMounted(() => {
       if (canvasRef.value) {
         stage = new Stage(canvasRef.value)
       }
@@ -42,6 +40,6 @@ export default defineComponent({
 
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
+<!-- Add 'scoped' attribute to limit CSS to this component only -->
+<style scoped lang='scss'>
 </style>

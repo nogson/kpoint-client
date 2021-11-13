@@ -4,8 +4,9 @@ import closeButton from '@/assets/images/button_close.png'
 import productThumbnail from '@/assets/images/product_thumbnail.png'
 import iconPoint from '@/assets/images/icon_point.png'
 import {Controller} from '@/logics/Controller'
-
 import {gsap} from 'gsap'
+import store from '@/store'
+import {present} from '@/types/present'
 
 const windowW = window.innerWidth
 const windowH = window.innerHeight
@@ -34,7 +35,7 @@ export class ShopDialog {
     public closeButton = PIXI.Sprite.from(closeButton)
     private controller: Controller
 
-    constructor(controller : Controller) {
+    constructor(controller: Controller) {
         this.container.sortableChildren = true
         this.controller = controller
         this.dialogContainer.y = windowH
@@ -75,6 +76,7 @@ export class ShopDialog {
     private createDialog = () => {
         const itemWidth = 350
         const itemHeight = 120
+        const items = store.getters.presents
 
         // 背景
         this.dialogBg.anchor.set(0.5, 0)
@@ -82,8 +84,7 @@ export class ShopDialog {
         this.dialogContainer.addChild(this.dialogBg)
 
 
-        // ポイントのテキストボックス
-        for (let i = 0, j = 4; i < 4; i++) {
+        items.forEach((item: present, i: number) => {
             const itemContainer = new PIXI.Container()
             const thumbnail = PIXI.Sprite.from(productThumbnail)
 
@@ -115,7 +116,7 @@ export class ShopDialog {
 
 
             // テキスト
-            const productText = 'テストテストテストテストテストテストテストテスト'
+            const productText = item.name
             const productTextSprite = new PIXI.Text(productText, productTextStyle)
             productTextSprite.x = 100 + 40
             productTextSprite.y = 20
@@ -128,17 +129,16 @@ export class ShopDialog {
             itemContainer.addChild(icon)
 
             // ポイントテキスト
-            const pointText = '100'
+            const pointText = String(item.point)
             const pointTextSprite = new PIXI.Text(pointText, pointTextStyle)
             pointTextSprite.x = 185
             pointTextSprite.y = 75
             itemContainer.addChild(pointTextSprite)
 
-
             this.dialogContainer.addChild(itemContainer)
+        })
 
 
-        }
         this.container.addChild(this.dialogContainer)
     }
     //
