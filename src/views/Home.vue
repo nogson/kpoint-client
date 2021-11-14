@@ -7,7 +7,6 @@ import {defineComponent, reactive, onMounted, onBeforeMount, ref} from 'vue'
 import {Stage} from '@/logics/Stage'
 import {useStore} from 'vuex'
 
-
 interface State {
   stage: Stage | null;
 }

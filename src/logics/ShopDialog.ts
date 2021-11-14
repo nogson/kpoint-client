@@ -6,10 +6,16 @@ import iconPoint from '@/assets/images/icon_point.png'
 import {Controller} from '@/logics/Controller'
 import {gsap} from 'gsap'
 import store from '@/store'
-import {present} from '@/types/present'
+// import {Present} from '@/types/present'
 
 const windowW = window.innerWidth
 const windowH = window.innerHeight
+
+interface  Present {
+    name: string
+    point: number
+    thumbnail: string
+}
 
 const productTextStyle = new PIXI.TextStyle({
     fill: '0x000000',
@@ -84,9 +90,9 @@ export class ShopDialog {
         this.dialogContainer.addChild(this.dialogBg)
 
 
-        items.forEach((item: present, i: number) => {
+        items.forEach((item: Present | any, i: number) => {
             const itemContainer = new PIXI.Container()
-            const thumbnail = PIXI.Sprite.from(productThumbnail)
+            const thumbnail = PIXI.Sprite.from(item.thumbnail)
 
             itemContainer.x = (windowW - itemWidth) / 2
             itemContainer.y = i * (itemHeight + 24) + 130

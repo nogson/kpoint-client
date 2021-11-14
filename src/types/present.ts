@@ -1,4 +1,5 @@
-export type present = {
+export type Present = {
     name: string,
-    point: number
+    point: number,
+    thumbnail: string
 }
