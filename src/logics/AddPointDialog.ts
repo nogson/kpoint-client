@@ -5,9 +5,15 @@ import dialogTextBoxBg from '@/assets/images/point_dialog_text_box.png'
 import closeButton from '@/assets/images/button_close.png'
 import {gsap} from 'gsap'
 import {Controller} from '@/logics/Controller'
+import store from "@/store"
 
 const windowW = window.innerWidth
 const windowH = window.innerHeight
+
+interface Point {
+    label: string
+    point: number
+}
 
 const pointTextStyle = new PIXI.TextStyle({
     fill: 'white',
@@ -94,9 +100,10 @@ export class AddPointDialog {
         this.dialogBg.anchor.set(0.5, 0)
         this.dialogBg.x = windowW / 2
         this.dialogContainer.addChild(this.dialogBg)
+        const items = store.getters.points
 
         // ポイントのテキストボックス
-        for (let i = 0, j = 4; i < 4; i++) {
+        items.forEach((item: Point, i: number) => {
             const textBoxContainer = new PIXI.Container()
             const dialogTextBox = PIXI.Sprite.from(dialogTextBoxBg)
             // 背景
@@ -105,7 +112,7 @@ export class AddPointDialog {
             dialogTextBox.y = i * (133 + 24) + 110
             textBoxContainer.addChild(dialogTextBox)
             // ポイント テキスト
-            const point = i
+            const point = item.point
             const pointTextSprite = new PIXI.Text(String(point), pointTextStyle)
             pointTextSprite.anchor.set(0.5)
             pointTextSprite.x = windowW / 2 - 102
@@ -113,7 +120,7 @@ export class AddPointDialog {
             textBoxContainer.addChild(pointTextSprite)
 
             // 特典内容 テキスト
-            const detailTextSprite = new PIXI.Text('宿題頑張りました！', pointDetailTextStyle)
+            const detailTextSprite = new PIXI.Text(item.label, pointDetailTextStyle)
             detailTextSprite.anchor.set(0, 0.5)
             detailTextSprite.x = windowW / 2 - 40
             detailTextSprite.y = i * (133 + 24) + 110 + 133 / 2
@@ -128,12 +135,14 @@ export class AddPointDialog {
                 this.getPoint(point)
             })
 
-        }
+        })
         this.container.addChild(this.dialogContainer)
     }
 
-    private getPoint = (point: number) => {
+    private getPoint = async (point: number) => {
         console.log('ok', point)
+        await store.dispatch('setPoint', point)
+        this.fadeOut()
     }
 
     private createBackGround = () => {

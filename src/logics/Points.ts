@@ -1,41 +1,64 @@
 import * as PIXI from 'pixi.js'
 import {Point} from '@/logics/Point'
+import store from '@/store'
+import {watch} from "vue"
 
 const windowW = document.body.clientWidth
+
+interface Position {
+    x: number
+    y: number
+}
 
 export class Points {
     public container = new PIXI.Container()
     private pointSize = 100
+    private positions:Position[] = []
+    private pointInstance:any[] = []
 
     constructor(maxPoints = 30) {
-        const positions = this.getPosition(maxPoints)
+        this.positions = this.getPosition(maxPoints)
 
         // line
-        for (let i = 0, j = positions.length - 1; i < j; i++) {
+        for (let i = 0, j = this.positions.length - 1; i < j; i++) {
             const line = new PIXI.Graphics()
             const margin: number = this.pointSize / 2
-            const startX: number = positions[i].x + margin
-            const startY: number = positions[i].y + margin
-            const endX: number = positions[i + 1].x + margin
-            const endY: number = positions[i + 1].y + margin
+            const startX: number = this.positions[i].x + margin
+            const startY: number = this.positions[i].y + margin
+            const endX: number = this.positions[i + 1].x + margin
+            const endY: number = this.positions[i + 1].y + margin
             line.lineStyle(22, 0xF9C200).moveTo(startX, startY).lineTo(endX, endY)
             this.container.addChild(line)
         }
 
-        // point
-        for (let i = 0, j = positions.length; i < j; i++) {
+        for (let i = 0, j = this.positions.length; i < j; i++) {
             const props = {
                 text: String(i + 1),
-                x: positions[i].x,
-                y: positions[i].y,
-                isActive: true
+                x: this.positions[i].x,
+                y: this.positions[i].y,
+                isActive: store.getters.userSate.point > i + 1
             }
             const point = new Point(props)
+            this.pointInstance.push(point)
             this.container.addChild(point.container)
         }
+
+        watch(
+            () => store.state.userSate.point,
+            async (v,ov) => {
+                console.log(v,ov,this.pointInstance)
+                this.pointInstance[24].setActive(true)
+                // this.setActive
+            }
+        )
     }
 
-    private getPosition = (maxPoints: number): { x: number, y: number }[] => {
+    private updatePointStatus = () => {
+        // point
+
+    }
+
+    private getPosition = (maxPoints: number): Position[] => {
         const margin = 25
         const pointSize = this.pointSize + margin
         const positions: { x: number, y: number }[] = []

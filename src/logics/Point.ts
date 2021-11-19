@@ -11,9 +11,9 @@ type props = {
 
 
 export class Point {
-    readonly pointSprite: PIXI.Sprite | null
     readonly textSprite: PIXI.Text | null
     public container: PIXI.Container = new PIXI.Container()
+    public pointSprite: PIXI.Sprite | null
 
     constructor(props: props = {text: '0', x: 0, y: 0, isActive: false}) {
 
@@ -41,6 +41,11 @@ export class Point {
 
         this.container.x = props.x
         this.container.y = props.y
+    }
+
+    public setActive = (b:boolean) => {
+        console.log('okkk')
+        this.pointSprite = b? PIXI.Sprite.from(active) : PIXI.Sprite.from(deActive)
     }
 
 }

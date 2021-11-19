@@ -20,12 +20,10 @@ export default defineComponent({
       stage: null
     })
 
-    onBeforeMount(async () => {
+    onMounted(async() => {
+      await store.dispatch('getUserState')
       await store.dispatch('getPresents')
-    })
-
-
-    onMounted(() => {
+      await store.dispatch('getPoints')
       if (canvasRef.value) {
         stage = new Stage(canvasRef.value)
       }

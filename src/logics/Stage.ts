@@ -3,6 +3,8 @@ import {Points} from '@/logics/Points'
 import {Controller} from '@/logics/Controller'
 import {AddPointDialog} from '@/logics/AddPointDialog'
 import {ShopDialog} from '@/logics/ShopDialog'
+import store from "@/store"
+import {watch} from 'vue'
 
 const windowH = window.innerHeight
 
@@ -22,10 +24,12 @@ export class Stage {
         this.controller.container.y = windowH - 66 - 25
         this.controller.btnAddPoint.on('click', this.openAddPointDialog)
         this.controller.pointTextContainer.on('click', this.openShopDialog)
+
     }
 
+
     openAddPointDialog = () => {
-        this.addPointDialog = new AddPointDialog(this.app,this.controller)
+        this.addPointDialog = new AddPointDialog(this.app, this.controller)
         this.app.addContainer(this.addPointDialog.container)
     }
 
