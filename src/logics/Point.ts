@@ -18,6 +18,7 @@ export class Point {
     constructor(props: props = {text: '0', x: 0, y: 0, isActive: false}) {
 
         this.pointSprite = props.isActive ? PIXI.Sprite.from(active) : PIXI.Sprite.from(deActive)
+        console.log(this.pointSprite)
         this.container.addChild(this.pointSprite)
 
         const style = new PIXI.TextStyle({
@@ -44,8 +45,9 @@ export class Point {
     }
 
     public setActive = (b:boolean) => {
-        console.log('okkk')
-        this.pointSprite = b? PIXI.Sprite.from(active) : PIXI.Sprite.from(deActive)
+        if(this.pointSprite) {
+           // this.pointSprite.texture = b? PIXI.Sprite.from(active) : PIXI.Sprite.from(deActive)
+        }
     }
 
 }

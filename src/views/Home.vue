@@ -1,36 +1,27 @@
 <template>
-  <canvas ref='canvasRef'></canvas>
+  <points v-if="isInitialized"/>
 </template>
 
 <script lang='ts'>
 import {defineComponent, reactive, onMounted, onBeforeMount, ref} from 'vue'
-import {Stage} from '@/logics/Stage'
 import {useStore} from 'vuex'
-
-interface State {
-  stage: Stage | null;
-}
+import Points from '@/components/Points.vue'
 
 export default defineComponent({
-  components: {},
+  components: {Points},
   setup() {
     const store = useStore()
-    let canvasRef = ref<HTMLCanvasElement | null>(null)
-    let {stage} = reactive<State>({
-      stage: null
-    })
+    let isInitialized = ref(false)
 
-    onMounted(async() => {
+    onBeforeMount(async () => {
       await store.dispatch('getUserState')
       await store.dispatch('getPresents')
       await store.dispatch('getPoints')
-      if (canvasRef.value) {
-        stage = new Stage(canvasRef.value)
-      }
+      isInitialized.value = true
     })
 
     return {
-      canvasRef
+      isInitialized
     }
   }
 })
