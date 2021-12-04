@@ -1,0 +1,21 @@
+.button-base {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 40px;
+  min-width: 200px;
+  font-weight: $font-bold;
+  box-sizing: border-box;
+}
+
+.button-1 {
+  @extend .button-base;
+  background: $color-primary;
+  color: #FFF;
+}
+
+.button-2 {
+  @extend .button-base;
+  border: 2px solid $color-primary;
+  background: #FFF;
+  color: $color-primary;
+}

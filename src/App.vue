@@ -1,14 +1,38 @@
 <template>
-  <router-view/>
+  <router-view v-if="state.initialized"/>
 </template>
+
+<script lang='ts'>
+import {defineComponent, onBeforeMount, reactive} from 'vue'
+import {useStore} from 'vuex'
+
+export default defineComponent({
+  setup() {
+    const state = reactive({
+      initialized: false
+    })
+    const store = useStore()
+    onBeforeMount(async () => {
+      await store.dispatch('getUserState')
+      await store.dispatch('getPresents')
+      await store.dispatch('getPoints')
+      state.initialized = true
+    })
+    return {
+      state
+    }
+  }
+})
+
+</script>
 
 <style lang="scss">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  line-height: 0;
+  color: #FFF;
+  font-weight: $font-regular;
+  font-size: 40px;
 }
 </style>

@@ -57,6 +57,11 @@ select {
   font: inherit;
 }
 
+button {
+  border: none;
+  cursor: pointer;
+}
+
 /* Remove all animations and transitions for people that prefer not to see them */
 @media (prefers-reduced-motion: reduce) {
   html:focus-within {
@@ -79,4 +84,12 @@ body,html{
 
 body {
   min-height: 100vh;
+  background: $color-primary;
+}
+
+input[type=text],
+input[type=number]{
+  border: 1px solid $color-gray;
+  border-radius: 4px;
+  padding: 8px 8px;
 }

@@ -11,6 +11,7 @@ interface Present {
 }
 
 interface Point {
+    id: string
     label: string
     point: number
 }
@@ -60,7 +61,6 @@ export default createStore({
             // TODO any型にしないとエラーになる
             const presents: Present[] | any = []
             const querySnapshot = await firestore.collection('presents').get()
-
             querySnapshot.forEach(doc => {
                 const name = doc.data().name
                 const point = doc.data().point
@@ -76,10 +76,11 @@ export default createStore({
             const querySnapshot = await firestore.collection('points').get()
 
             querySnapshot.forEach(doc => {
+                const id = doc.id
                 const label = doc.data().label
                 const point = doc.data().point
 
-                points.push({label, point})
+                points.push({id, label, point})
             })
 
             commit('setPoints', points)
@@ -114,13 +115,33 @@ export default createStore({
                 item
             )
         },
-        setPoint: async ({commit,state}, point: number) => {
+        updatePointItem: async ({commit, state}, items: Point[]) => {
+            const docRef = firestore.collection('points')
+            // データを登録
+            await Promise.all(items.map(async item => {
+                if (item.id) {
+                    return await docRef.doc(item.id).set(item)
+                } else {
+                    return await docRef.add(item)
+                }
+
+            }))
+            return Promise.resolve()
+        },
+        deletePointItem: async ({commit}, item: Point) => {
+            // データを登録
+            const docRef = firestore.collection('points')
+            // await docRef.add(
+            //     item
+            // )
+        },
+        setPoint: async ({commit, state}, point: number) => {
             // データを登録
             const docRef = firestore.collection('userState').doc('8SAWnNqC2xtQRcref0FB')
-            const params = {point: state.userSate.point + point }
+            const params = {point: state.userSate.point + point}
             await docRef.update(params)
             commit('setUserSate', params)
-        }
+        },
     },
     modules: {}
 })
