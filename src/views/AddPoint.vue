@@ -1,9 +1,12 @@
 <template>
-  <section id="add-points">
-    <div class="points-wrap">
-      <h1>ポイント</h1>
-      <div v-for="(point,index) in points" :key="index" class="point" @click="addPoint(point.point)">
-        <span class="value">{{ point.point }}</span> {{ point.label }}
+  <section>
+    <router-link to="/"><span class="button-icon-1"><chevron-left :size="32"/></span></router-link>
+    <div id="add-points">
+      <div class="points-wrap">
+        <h1>ポイント</h1>
+        <div v-for="(point,index) in points" :key="index" class="point" @click="addPoint(point.point)">
+          <span class="value">{{ point.point }}</span> {{ point.label }}
+        </div>
       </div>
     </div>
   </section>
@@ -13,10 +16,11 @@
 <script lang='ts'>
 import {computed, defineComponent, onBeforeMount} from "vue"
 import {useStore} from "vuex"
+import ChevronLeft from 'vue-material-design-icons/ChevronLeft.vue'
 
 
 export default defineComponent({
-  components: {},
+  components: {ChevronLeft},
   setup() {
     const store = useStore()
     const points = computed(() => store.getters.points)

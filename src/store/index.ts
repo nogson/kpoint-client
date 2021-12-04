@@ -5,9 +5,11 @@ import {toRaw} from '@vue/reactivity'
 // import {Present} from '@/types/present'
 
 interface Present {
+    id: string
     name: string
     point: number
-    thumbnail: string
+    // TODO File型も
+    thumbnail: any
 }
 
 interface Point {
@@ -62,11 +64,12 @@ export default createStore({
             const presents: Present[] | any = []
             const querySnapshot = await firestore.collection('presents').get()
             querySnapshot.forEach(doc => {
+                const id = doc.id
                 const name = doc.data().name
                 const point = doc.data().point
                 const thumbnail = doc.data().thumbnail
 
-                presents.push({name, point, thumbnail})
+                presents.push({id, name, point, thumbnail})
             })
 
             commit('setPresents', presents)
@@ -108,20 +111,41 @@ export default createStore({
                 console.log('error', e)
             }
         },
-        setPointItem: async ({commit, dispatch, state}, item: Point) => {
+        updatePresents: async ({commit, dispatch, state}, items: Present[]) => {
+            const docRef = firestore.collection('presents')
             // データを登録
-            const docRef = firestore.collection('points')
-            await docRef.add(
-                item
-            )
-            await dispatch('getPoints')
-            return state.points
+            await Promise.all(items.map(async item => {
+                // 画像をアップロード
+                if (item.thumbnail && typeof item.thumbnail !== 'string') {
+                    const storageRef = storage.ref(item.thumbnail.name)
+                    const snapshot = await storageRef.put(item.thumbnail)
+                    // 画像のパスを取得
+                    item.thumbnail = await snapshot.ref.getDownloadURL()
+                }
+                if (item.id) {
+                    console.log(item)
+                    return await docRef.doc(item.id).set(item)
+                } else {
+                    return await docRef.add(item)
+                }
+
+            }))
+            await dispatch('getPresents')
+            return state.presents
+        },
+        deletePresent: async ({commit, dispatch, state}, item: Present) => {
+            // データを登録
+            const docRef = firestore.collection('presents')
+            await docRef.doc(item.id).delete()
+            await dispatch('getPresents')
+            return state.presents
         },
         updatePointItem: async ({commit, dispatch, state}, items: Point[]) => {
             const docRef = firestore.collection('points')
             // データを登録
             await Promise.all(items.map(async item => {
                 if (item.id) {
+                    console.log(item)
                     return await docRef.doc(item.id).set(item)
                 } else {
                     return await docRef.add(item)
