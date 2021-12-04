@@ -108,14 +108,16 @@ export default createStore({
                 console.log('error', e)
             }
         },
-        setPointItem: async ({commit}, item: Point) => {
+        setPointItem: async ({commit, dispatch, state}, item: Point) => {
             // データを登録
             const docRef = firestore.collection('points')
             await docRef.add(
                 item
             )
+            await dispatch('getPoints')
+            return state.points
         },
-        updatePointItem: async ({commit, state}, items: Point[]) => {
+        updatePointItem: async ({commit, dispatch, state}, items: Point[]) => {
             const docRef = firestore.collection('points')
             // データを登録
             await Promise.all(items.map(async item => {
@@ -126,14 +128,15 @@ export default createStore({
                 }
 
             }))
-            return Promise.resolve()
+            await dispatch('getPoints')
+            return state.points
         },
-        deletePointItem: async ({commit}, item: Point) => {
+        deletePointItem: async ({commit, dispatch, state}, item: Point) => {
             // データを登録
             const docRef = firestore.collection('points')
-            // await docRef.add(
-            //     item
-            // )
+            await docRef.doc(item.id).delete()
+            await dispatch('getPoints')
+            return state.points
         },
         setPoint: async ({commit, state}, point: number) => {
             // データを登録

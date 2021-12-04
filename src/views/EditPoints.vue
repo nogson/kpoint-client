@@ -1,7 +1,9 @@
 <template>
   <section id="edit-points">
     <article>
-      <h1>ポイントの追加・編集・削除</h1>
+      <h1>
+        <router-link to="/"><span class="button-icon-1"><chevron-left :size="32"/></span></router-link>
+        <span>ポイントの追加・編集・削除</span></h1>
       <div class="form-box">
         <div v-for="(point,index) in state.points" :key="index" class="point">
           <div>
@@ -18,7 +20,7 @@
         </div>
         <div class="button-wrap">
           <button type="button" class="button-1" @click="addItem">新規追加</button>
-          <button type="button" class="button-2" @click="onUpdate">更新</button>
+          <button type="button" class="button-2" @click="updateItem">更新</button>
         </div>
       </div>
     </article>
@@ -27,131 +29,141 @@
 
 
 <script lang='ts'>
-import {computed, defineComponent, onMounted, reactive} from 'vue'
-import {useStore} from 'vuex'
+    import {computed, defineComponent, onMounted, reactive} from 'vue'
+    import {useStore} from 'vuex'
+    import ChevronLeft from 'vue-material-design-icons/ChevronLeft.vue'
 
-interface Point {
-  label: string | null
-  point: number | null
-}
+    interface Point {
+        label: string | null
+        point: number | null
+    }
 
-interface State {
-  points: Point[]
-}
+    interface State {
+        points: Point[]
+    }
 
-export default defineComponent({
-  components: {},
-  setup() {
-    const store = useStore()
+    export default defineComponent({
+        components: {ChevronLeft},
+        setup() {
+            const store = useStore()
 
-    const state = reactive<State>({
-      points: store.getters.points
+            const state = reactive<State>({
+                points: store.getters.points
+            })
+
+            onMounted(() => {
+                state.points = store.getters.points
+            })
+
+            const form = reactive<Point>({
+                label: null,
+                point: null
+            })
+
+            const addItem = () => {
+                state.points.push({
+                    label: null,
+                    point: null
+                })
+            }
+
+            const updateItem = async () => {
+                await store.dispatch('updatePointItem', state.points)
+                state.points = store.getters.points
+
+            }
+
+            const deleteItem = async (point: Point) => {
+                await store.dispatch('deletePointItem', point)
+                state.points = store.getters.points
+            }
+
+            return {
+                form,
+                state,
+                addItem,
+                updateItem,
+                deleteItem
+            }
+        }
     })
-
-    onMounted(() => {
-      console.log(store.getters.points)
-      state.points = store.getters.points
-    })
-
-    const form = reactive<Point>({
-      label: null,
-      point: null
-    })
-
-    const addItem = () => {
-      state.points.push({
-        label: null,
-        point: null
-      })
-    }
-
-    const onUpdate = async () => {
-      await store.dispatch('updatePointItem', state.points)
-    }
-
-    const  deleteItem = async (point:Point) => {
-      await store.dispatch('deletePointItem', point)
-    }
-
-    return {
-      form,
-      state,
-      addItem,
-      onUpdate,
-      deleteItem
-    }
-  }
-})
 
 </script>
 
 <!-- Add 'scoped' attribute to limit CSS to this component only -->
 <style scoped lang='scss'>
-#edit-points {
-  padding: 24px;
-  font-size: 18px;
+  #edit-points {
+    padding: 24px;
+    font-size: 18px;
 
-  article {
-    margin-bottom: 48px;
-  }
+    article {
+      margin-bottom: 48px;
+    }
 
-  h1 {
-    font-size: 24px;
-    margin-bottom: 8px;
-  }
-
-  dl {
-    display: flex;
-    align-items: center;
-
-    &:first-child {
+    h1 {
+      font-size: 24px;
       margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+
+      > *:first-child {
+        margin-right: 16px;
+      }
     }
 
-    dt {
-      width: 100px;
-      flex-shrink: 0;
-      font-weight: $font-bold;
-    }
+    dl {
+      display: flex;
+      align-items: center;
 
-    dd {
-      width: 100%;
+      &:first-child {
+        margin-bottom: 16px;
+      }
 
-      input {
+      dt {
+        width: 100px;
+        flex-shrink: 0;
+        font-weight: $font-bold;
+      }
+
+      dd {
         width: 100%;
+
+        input {
+          width: 100%;
+        }
       }
     }
   }
-}
 
-.point {
-  background: #FFF;
-  color: $color-black;
-  padding: 24px;
-  border-radius: 16px;
-  margin-bottom: 24px;
-  display: flex;
-  align-items: center;
+  .point {
+    background: #FFF;
+    color: $color-black;
+    padding: 24px;
+    border-radius: 16px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
 
-  > * {
-    &:first-child {
-      flex: 1;
-      margin-right: 24px;
-    }
-    &:last-child {
-      width: 2em;
-      text-align: center;
-      font-size: 14px;
-      font-weight: $font-bold;
-      color: $color-gray2;
-      cursor: pointer;
+    > * {
+      &:first-child {
+        flex: 1;
+        margin-right: 24px;
+      }
+
+      &:last-child {
+        width: 2em;
+        text-align: center;
+        font-size: 14px;
+        font-weight: $font-bold;
+        color: $color-gray2;
+        cursor: pointer;
+      }
     }
   }
-}
 
-.button-wrap {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-}
+  .button-wrap {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+  }
 </style>
