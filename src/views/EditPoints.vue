@@ -2,7 +2,7 @@
   <section id="edit-points">
     <article>
       <h1>
-        <router-link to="/"><span class="button-icon-1"><chevron-left :size="32"/></span></router-link>
+        <back-button />
         <span>ポイントの追加・編集・削除</span></h1>
       <div class="form-box">
         <div v-for="(point,index) in state.points" :key="index" class="point">
@@ -31,7 +31,7 @@
 <script lang='ts'>
     import {computed, defineComponent, onMounted, reactive} from 'vue'
     import {useStore} from 'vuex'
-    import ChevronLeft from 'vue-material-design-icons/ChevronLeft.vue'
+    import BackButton from '@/components/BackButton.vue'
 
     interface Point {
         label: string | null
@@ -43,7 +43,7 @@
     }
 
     export default defineComponent({
-        components: {ChevronLeft},
+        components: {BackButton},
         setup() {
             const store = useStore()
 

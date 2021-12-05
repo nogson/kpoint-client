@@ -92,25 +92,6 @@ export default createStore({
             const querySnapshot = await firestore.collection('userState').doc('8SAWnNqC2xtQRcref0FB').get()
             commit('setUserSate', querySnapshot.data())
         },
-        setPresent: async ({commit}, present: any) => {
-            try {
-                // 画像をアップロード
-                const storageRef = storage.ref(present.thumbnail.name)
-                const snapshot = await storageRef.put(present.thumbnail)
-
-                // 画像のパスを取得
-                const path = await snapshot.ref.getDownloadURL()
-                present.thumbnail = path
-
-                // データを登録
-                const docRef = firestore.collection('presents')
-                await docRef.add(
-                    present
-                )
-            } catch (e) {
-                console.log('error', e)
-            }
-        },
         updatePresents: async ({commit, dispatch, state}, items: Present[]) => {
             const docRef = firestore.collection('presents')
             // データを登録

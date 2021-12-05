@@ -2,7 +2,7 @@
   <section id="edit-present">
     <article>
       <h1>
-        <router-link to="/"><span class="button-icon-1"><chevron-left :size="32"/></span></router-link>
+        <back-button />
         <span>プレゼントの追加・編集・削除</span></h1>
       <div class="form-box">
         <div v-for="(present,index) in state.presents" :key="index" class="present">
@@ -35,7 +35,7 @@
 <script lang='ts'>
 import {computed, defineComponent, onMounted, reactive} from 'vue'
 import {useStore} from 'vuex'
-import ChevronLeft from 'vue-material-design-icons/ChevronLeft.vue'
+import BackButton from '@/components/BackButton.vue'
 
 interface Present {
   name: string | null
@@ -48,7 +48,7 @@ interface State {
 }
 
 export default defineComponent({
-  components: {ChevronLeft},
+  components: {BackButton},
   setup() {
     const store = useStore()
 

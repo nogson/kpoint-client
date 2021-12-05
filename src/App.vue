@@ -27,12 +27,4 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-#app {
-  font-family: 'M PLUS Rounded 1c', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #FFF;
-  font-weight: $font-regular;
-  font-size: 40px;
-}
 </style>
