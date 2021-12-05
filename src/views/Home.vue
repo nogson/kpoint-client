@@ -4,9 +4,12 @@
       <h1>Kポイント</h1>
       <h2>がんばれ！こうちゃん！！</h2>
       <div class="point-content">
-        <h3>かくとくポイント</h3>
-        <user-point/>
-        <p>ポイント</p>
+        <div class="point-content-inner">
+          <h3>かくとくポイント</h3>
+          <user-point/>
+          <p class="point-text">ポイント</p>
+        </div>
+        <div class="bg"></div>
       </div>
     </div>
     <div class="bottom-content">
@@ -33,8 +36,7 @@
     export default defineComponent({
         components: {CommonFooter, UserPoint},
         setup() {
-            return {
-            }
+            return {}
         }
     })
 
@@ -57,14 +59,14 @@
 
   .top-content {
     padding: 64px 0;
-    height: 60%;
+
     text-align: center;
   }
 
   .bottom-content {
     padding: 24px;
-    background: $color-secondary;
-    height: 40%;
+    background: $color-yellow;
+
 
     .button-wrap {
       display: flex;
@@ -74,18 +76,41 @@
   }
 
   .point-content {
-    background: #FFFFFF;
-    border: 12px solid $color-secondary;
-    box-sizing: border-box;
-    border-radius: 100%;
-    width: 300px;
-    height: 300px;
-    margin: 48px auto;
-    color: $color-primary;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
+      width: 383px;
+    height: 374px;
+    margin: 24px auto;
+
+    .bg {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 383px;
+      height: 374px;
+      background: center / contain no-repeat url("../assets/images/bg_circle.png");
+      animation-name: rotate;
+      animation-duration: 5s;
+      animation-timing-function: cubic-bezier(0.5, 0.51, 0.51, 0.52);
+      animation-iteration-count: infinite;
+    }
+
+    .point-content-inner {
+      background: #FFF;
+      box-sizing: border-box;
+      border-radius: 100%;
+      width: 300px;
+      height: 300px;
+      margin: 48px auto;
+      color: $color-primary;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      border: 10px solid $color-primary;
+    }
 
     h3 {
       font-size: 20px;
@@ -97,11 +122,11 @@
       font-size: 72px;
       line-height: 1;
       text-shadow: 0px 4px 0px darken($color-primary, 20%);
+    }
 
-      & + p {
-        font-size: 16px;
-        font-weight: $font-bold;
-      }
+    .point-text {
+      font-size: 16px;
+      font-weight: $font-bold;
     }
   }
 
@@ -129,6 +154,15 @@
         text-align: center;
       }
 
+    }
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotateZ(0);
+    }
+    100% {
+      transform: rotateZ(360deg);
     }
   }
 </style>

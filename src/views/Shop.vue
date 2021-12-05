@@ -79,6 +79,7 @@
       padding-top: 7px;
       font-weight: $font-black;
       text-shadow: 0 0 5px darken($color-pink, 20%);
+      color: #FFF;
     }
   }
 

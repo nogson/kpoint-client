@@ -101,6 +101,7 @@
       font-weight: $font-black;
       text-shadow: 0 0 5px darken($color-secondary, 20%);
       text-align: center;
+      color: #FFF;
     }
   }
 

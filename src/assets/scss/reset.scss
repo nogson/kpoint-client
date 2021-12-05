@@ -84,11 +84,13 @@ body,html{
 
 body {
   min-height: 100vh;
-  background: $color-primary;
+  background-image: url("../../assets/images/bg_pattern.png");
+  background-color:rgba(255,255,255,0.9);
+  background-blend-mode:lighten;
   font-family: 'M PLUS Rounded 1c', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #FFF;
+  color: $color-black;
   font-weight: $font-regular;
   font-size: 40px;
 }
