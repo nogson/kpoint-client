@@ -77,7 +77,7 @@ button {
   }
 }
 
-body,html{
+body, html {
   margin: 0;
   padding: 0;
 }
@@ -86,17 +86,17 @@ body {
   min-height: 100vh;
   background-image: url("../../assets/images/bg_pattern.png");
   background-color:rgba(255,255,255,0.9);
-  background-blend-mode:lighten;
+  background-blend-mode: lighten;
   font-family: 'M PLUS Rounded 1c', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: $color-black;
   font-weight: $font-regular;
-  font-size: 40px;
+  font-size: 24px;
 }
 
 input[type=text],
-input[type=number]{
+input[type=number] {
   border: 1px solid $color-gray;
   border-radius: 4px;
   padding: 8px 8px;

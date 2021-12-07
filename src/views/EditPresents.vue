@@ -114,7 +114,7 @@ export default defineComponent({
   }
 
   h1 {
-    font-size: 24px;
+    font-size: 18px;
     margin-bottom: 16px;
     display: flex;
     align-items: center;
@@ -127,6 +127,11 @@ export default defineComponent({
   dl {
     display: flex;
     align-items: center;
+    @include sm() {
+      align-items: start;
+      flex-direction: column;
+      gap: 8px;
+    }
 
     &:not(:last-child) {
       margin-bottom: 16px;
@@ -156,6 +161,7 @@ export default defineComponent({
   margin-bottom: 24px;
   display: flex;
   align-items: center;
+  border: 2px solid $color-black;
 
   > * {
     &:first-child {
@@ -178,5 +184,8 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   gap: 16px;
+  @include sm() {
+    flex-direction: column;
+  }
 }
 </style>

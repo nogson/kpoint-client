@@ -7,7 +7,7 @@
 <script lang="ts">
     import {computed, defineComponent, onMounted, ref} from 'vue'
     import {useStore} from 'vuex'
-    import ShuffleText from "shuffle-text"
+    import ShuffleText from 'shuffle-text'
 
     export default defineComponent({
         components: {},

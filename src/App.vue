@@ -1,5 +1,7 @@
 <template>
-  <router-view v-if="state.initialized"/>
+  <div id="wrapper">
+    <router-view v-if="state.initialized"/>
+  </div>
 </template>
 
 <script lang='ts'>

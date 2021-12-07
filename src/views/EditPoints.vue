@@ -19,8 +19,8 @@
           <div @click="deleteItem(point)">削除</div>
         </div>
         <div class="button-wrap">
-          <button type="button" class="button-1" @click="addItem">新規追加</button>
-          <button type="button" class="button-2" @click="updateItem">更新</button>
+          <button type="button" class="button-2" @click="addItem">新規追加</button>
+          <button type="button" class="button-1" @click="updateItem">更新</button>
         </div>
       </div>
     </article>
@@ -101,7 +101,7 @@
     }
 
     h1 {
-      font-size: 24px;
+      font-size: 18px;
       margin-bottom: 16px;
       display: flex;
       align-items: center;
@@ -114,6 +114,12 @@
     dl {
       display: flex;
       align-items: center;
+
+      @include sm() {
+        align-items: start;
+        flex-direction: column;
+        gap: 8px;
+      }
 
       &:first-child {
         margin-bottom: 16px;
@@ -143,6 +149,7 @@
     margin-bottom: 24px;
     display: flex;
     align-items: center;
+    border: 2px solid $color-black;
 
     > * {
       &:first-child {
@@ -165,5 +172,8 @@
     display: flex;
     justify-content: center;
     gap: 16px;
+    @include sm() {
+      flex-direction: column;
+    }
   }
 </style>

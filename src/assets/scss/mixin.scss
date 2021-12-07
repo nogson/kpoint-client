@@ -1,0 +1,33 @@
+// メディアクエリ用
+@mixin lg {
+  @media (min-width: ($bp-lg)) {
+    @content;
+  }
+}
+@mixin md {
+  @media (max-width: ($bp-lg - 1)) {
+    @content;
+  }
+}
+@mixin sm {
+  @media (max-width: ($bp-sm)) {
+    @content;
+  }
+}
+@mixin xsm {
+  @media (max-width: ($bp-xsm)) {
+    @content;
+  }
+}
+
+@mixin more_md {
+  @media (min-width: ($bp-sm + 1)) {
+    @content;
+  }
+}
+
+@mixin more_md_less_than_lg {
+  @media (min-width: ($bp-sm + 1)) and (max-width: ($bp-lg - 1)) {
+    @content;
+  }
+}
