@@ -28,6 +28,7 @@
                   {{ state.selectedPresent.name }}ゲット！
                 </p>
                 <div class="current-point">
+                  <span>のこり</span>
                   <user-point/>
                   <span>ポイント</span></div>
               </div>
@@ -238,12 +239,17 @@
     }
 
     .current-point {
+      display: flex;
+      align-items: end;
+      justify-content: center;
       .user-point {
-        font-size: 32px;
+        font-size: 24px;
+        padding: 0 4px;
       }
 
-      > span:last-child {
+      > span {
         font-size: 14px;
+        line-height: 1;
       }
     }
   }
