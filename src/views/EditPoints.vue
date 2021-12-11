@@ -2,7 +2,7 @@
   <section id="edit-points">
     <article>
       <h1>
-        <back-button />
+        <back-button/>
         <span>ポイントの追加・編集・削除</span></h1>
       <div class="form-box">
         <div v-for="(point,index) in state.points" :key="index" class="point">
@@ -20,7 +20,10 @@
         </div>
         <div class="button-wrap">
           <button type="button" class="button-2" @click="addItem">新規追加</button>
-          <button type="button" class="button-1" @click="updateItem">更新</button>
+          <button type="button" class="button-1" @click="updateItem" :disabled="disabledUpdateBtn">
+            <loader v-if="state.loadingUpdateBtn"/>
+            <span v-else>更新</span>
+          </button>
         </div>
       </div>
     </article>
@@ -32,6 +35,7 @@
     import {computed, defineComponent, onMounted, reactive} from 'vue'
     import {useStore} from 'vuex'
     import BackButton from '@/components/BackButton.vue'
+    import Loader from '@/components/Loader.vue'
 
     interface Point {
         label: string | null
@@ -39,20 +43,25 @@
     }
 
     interface State {
-        points: Point[]
+        points: Point[],
+        loadingUpdateBtn: boolean
     }
 
     export default defineComponent({
-        components: {BackButton},
+        components: {BackButton, Loader},
         setup() {
             const store = useStore()
 
             const state = reactive<State>({
-                points: store.getters.points
+                points: store.getters.points,
+                loadingUpdateBtn: false
             })
 
             onMounted(() => {
                 state.points = store.getters.points
+                if (state.points.length <= 0) {
+                    addItem()
+                }
             })
 
             const form = reactive<Point>({
@@ -68,9 +77,10 @@
             }
 
             const updateItem = async () => {
+                state.loadingUpdateBtn = true
                 await store.dispatch('updatePointItem', state.points)
                 state.points = store.getters.points
-
+                state.loadingUpdateBtn = false
             }
 
             const deleteItem = async (point: Point) => {
@@ -78,12 +88,20 @@
                 state.points = store.getters.points
             }
 
+            const disabledUpdateBtn = computed(() => {
+                const hasEmptyBox = !!state.points.find(point => {
+                    return !(point.label && point.point)
+                })
+                return state.points.length <= 0 || hasEmptyBox || state.loadingUpdateBtn
+            })
+
             return {
                 form,
                 state,
                 addItem,
                 updateItem,
-                deleteItem
+                deleteItem,
+                disabledUpdateBtn
             }
         }
     })
