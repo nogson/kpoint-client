@@ -5,12 +5,18 @@
   min-width: 200px;
   font-weight: $font-bold;
   box-sizing: border-box;
+  &:disabled {
+    cursor: none;
+  }
 }
 
 .button-1 {
   @extend .button-base;
   background: $color-primary;
   color: #FFF;
+  &:disabled {
+    background: $color-gray2;
+  }
 }
 
 .button-2 {
