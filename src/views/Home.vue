@@ -1,7 +1,7 @@
 <template>
   <section class="home-content">
     <div class="top-content">
-      <h1>Kポイント</h1>
+      <h1><img src="@/assets/images/logo.png" alt="Kポイント"/> </h1>
       <h2>がんばれ！こうちゃん！！</h2>
       <rotate-circle>
         <h3>かくとくポイント</h3>
@@ -45,6 +45,11 @@ export default defineComponent({
 h1 {
   font-weight: $font-black;
   font-size: 48px;
+  margin-bottom: 16px;
+  img {
+    width: 300px;
+    margin: 0 auto;
+  }
 }
 
 h2 {
