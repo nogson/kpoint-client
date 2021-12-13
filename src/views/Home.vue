@@ -61,7 +61,7 @@ h2 {
 }
 
 .top-content {
-  padding: 64px 0;
+  padding: 64px 0 16px;
 
   text-align: center;
 }

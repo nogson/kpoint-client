@@ -38,7 +38,7 @@
     font-weight: $font-black;
     font-size: 72px;
     line-height: 1;
-    text-shadow: 0px 4px 0px darken($color-primary, 20%);
+    text-shadow: 0px 2px 0px darken($color-primary, 20%);
     color: $color-primary;
   }
 </style>

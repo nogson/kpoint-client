@@ -1,9 +1,9 @@
 <template>
-  <section>
+  <section id='add-points'>
     <back-button class='back-button'/>
-    <div id='add-points'>
+    <div>
       <div class='points-wrap'>
-        <h1>ポイント</h1>
+        <h1><img src="@/assets/images/add_point_title.png" alt="ポイント"></h1>
         <div v-for='(point,index) in points' :key='index' class='point' @click='addPoint(point.point)'>
           <span class='value'>{{ point.point }}</span> {{ point.label }}
         </div>
@@ -82,7 +82,8 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: center;
-  height: calc(100vh - 64px);
+  min-height: 100vh;
+  overflow: hidden;
 }
 
 .points-wrap {
@@ -91,18 +92,18 @@ export default defineComponent({
   width: 332px;
   background: #00C2FF;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 100px 100px 20px 20px;
+  border-radius: 150px 150px 20px 20px;
   padding: 90px 24px 24px;
 
   h1 {
     position: absolute;
-    left: (332px - 395px) /2;
+    left: (332px - 550px) /2;
     top: -20px;
     //transform: translate(50%,0);
-    width: 395px;
+    width: 550px;
     height: 91px;
     font-size: 32px;
-    background: url('../assets/images/add_point_title.png') no-repeat center;
+    //background: url('../assets/images/add_point_title.png') no-repeat center;
     background-size: contain;
     padding-top: 7px;
     font-weight: $font-black;
@@ -144,6 +145,7 @@ export default defineComponent({
   position: absolute;
   left: 24px;
   top: 24px;
+  z-index: 100;
 }
 
 .dialog-wrapper {
@@ -166,7 +168,6 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 479px;
   height: 468px;
   font-size: 16px;
 

@@ -3,7 +3,7 @@
     <back-button class="back-button"/>
     <div id="shop">
       <div class="present-wrap">
-        <h1>おみせ</h1>
+        <h1><img src="@/assets/images/shop_title.png" alt="おみせ"></h1>
         <div v-if="state.isInsufficientPoint" class="insufficient-point"><span>ポイントが足らない</span>
           <emoticon-cry-outline :size="32" class="icon"/>
         </div>
@@ -109,6 +109,7 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
+    overflow: hidden;
   }
 
   .present-wrap {
@@ -117,19 +118,19 @@
     width: 332px;
     background: $color-secondary;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 100px 100px 20px 20px;
+    border-radius: 150px 150px 20px 20px;
     padding: 90px 24px 24px;
 
     h1 {
       text-align: center;
       position: absolute;
-      left: (332px - 380px) /2;
+      left: (332px - 550px) /2;
       top: -20px;
       //transform: translate(50%,0);
-      width: 380px;
+      width: 550px;
       height: 91px;
       font-size: 32px;
-      background: url("../assets/images/shop_title.png") no-repeat center;
+      //background: url("../assets/images/shop_title.png") no-repeat center;
       background-size: contain;
       padding-top: 7px;
       font-weight: $font-black;
@@ -185,6 +186,7 @@
     position: absolute;
     left: 24px;
     top: 24px;
+    z-index: 100;
   }
 
   .insufficient-point {
